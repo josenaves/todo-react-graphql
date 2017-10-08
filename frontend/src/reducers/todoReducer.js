@@ -8,6 +8,9 @@ import {
 
 const todoReducer = (state = [], action) => {
   switch (action.type) {
+    case LOADED_TODOS:
+      return action.todos;
+      
     case ADD_TODO:
       return [
         ...state,

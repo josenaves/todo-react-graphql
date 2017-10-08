@@ -2,9 +2,10 @@ import React from 'react';
 import TodoItem from './TodoItem';
 
 const TodoList = (props) => {
+  console.log("props:", props);
 
   const { data } = props;
-  
+
   if (data.loading) {
     return (
       <div>
@@ -20,6 +21,9 @@ const TodoList = (props) => {
       </div>
     );
   }
+
+  // dispach an action creator
+  props.loadedTodos(data.allTodos.edges);
 
   const todos = data.allTodos.edges;
   return (
