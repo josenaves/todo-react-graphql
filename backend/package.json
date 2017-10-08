@@ -12,7 +12,6 @@
     "cors": "^2.8.4",
     "express": "^4.16.1",
     "express-graphql": "^0.6.11",
-    "pg": "^7.3.0",
-    "postgraphql": "^3.5.0"
+    "pg": "^7.3.0"
   }
 }
