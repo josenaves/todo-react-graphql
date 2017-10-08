@@ -4,6 +4,7 @@ import TodoItem from './TodoItem';
 
 class TodoList extends Component {
   componentDidMount() {
+    console.log("props:", this.props);
   }
 
   render() {
