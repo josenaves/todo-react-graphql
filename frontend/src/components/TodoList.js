@@ -1,55 +1,34 @@
-import React, { Component } from 'react';
-import { gql, graphql } from 'react-apollo';
+import React from 'react';
 import TodoItem from './TodoItem';
 
-class TodoList extends Component {
-  componentDidMount() {
-    console.log("props:", this.props);
-  }
+const TodoList = (props) => {
 
-  render() {
-    const { data } = this.props;
-    if (data.loading) {
-      return (
-        <div>
-          Loading ...
-        </div>
-      );
-    };
-
-    if (data.error) {
-      return (
-        <div>
-          Connection error - is your backend running ?
-        </div>
-      );
-    }
-
-    const todos = data.allTodos.edges;
+  const { data } = props;
+  
+  if (data.loading) {
     return (
       <div>
-        { todos.map((todo, index) => 
-          <TodoItem todo={todo} key={index}/>
-        )}
+        Loading ...
+      </div>
+    );
+  };
+
+  if (data.error) {
+    return (
+      <div>
+        Connection error - is your backend running ?
       </div>
     );
   }
-}
 
-const TodoQuery = gql`
-  {
-      allTodos {
-        edges {
-          node {
-            id
-            description
-            dueDate
-            priority
-            completed
-          }
-        }
-      }
-    }
-`;
+  const todos = data.allTodos.edges;
+  return (
+    <div>
+      { todos.map((todo, index) => 
+        <TodoItem todo={todo} key={index}/>
+      )}
+    </div>
+  );
+};
 
-export default graphql(TodoQuery)(TodoList);
+export default TodoList;

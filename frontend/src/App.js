@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import TodoList from './components/TodoList';
+import TodoListContainer from './containers/TodoListContainer';
 
 class App extends Component {
   render() {
@@ -9,7 +9,7 @@ class App extends Component {
         <p className="App-intro">
           Welcome
         </p>
-        <TodoList />
+        <TodoListContainer />
       </div>
     );
   }
