@@ -1,4 +1,4 @@
-export const LIST_TODOS = 'LIST_TODO';
+export const LOADED_TODOS = 'LOADED_TODOS';
 export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
