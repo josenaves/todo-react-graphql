@@ -21,6 +21,7 @@ const typeDefs = `
       priority: Int!
       completed: Boolean!
     ): Todo
+    removeTodo(id: ID!): ID
   }
 
   schema {

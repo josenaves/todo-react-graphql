@@ -23,6 +23,12 @@ const resolvers = {
         .returning(fields)
         .insert({ description, due_date: dueDate, priority, completed });
       return r[0];
+    },
+    async removeTodo(root, { id }) {
+      const rows = await knex('todos')
+        .where({id})
+        .del();
+      return rows[0];
     }
   }
 };
