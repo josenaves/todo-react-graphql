@@ -18,6 +18,12 @@ const resolvers = {
     }
   },
   Mutation: {
+    async addTodo(root, { description, dueDate, priority, completed }) {
+      const r = await knex('todos')
+        .returning(fields)
+        .insert({ description, due_date: dueDate, priority, completed });
+      return r[0];
+    }
   }
 };
 
