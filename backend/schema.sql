@@ -8,38 +8,36 @@
 
 
 -- $ sudo -u postgres createdb flexhire
--- $ sudo -u postgres psql flexhire
 
+-- $ sudo -u postgres psql flexhire
 
 createdb flexhire;
 
 create table todos (
     id serial PRIMARY KEY,
     description varchar NOT NULL,
-    due_date date NOT NULL,
+    due_date varchar NOT NULL,
     priority int NOT NULL,
     completed boolean NOT NULL
 );
 
-insert into todos (description, due_date, priority, completed) values ('task #1', '2017/10/16', 1, false);
+insert into todos (description, due_date, priority, completed) values ('Task #1', '2017/10/08', 1, false);
 
+-- flexhire=# \conninfo 
+-- You are connected to database "flexhire" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
 
--- postgres=# \conninfo 
--- You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
-
--- postgres=# select * from todo                                                                                      
--- ;
+-- flexhire=# select * from todos
+-- flexhire-# ;
 --  id | description |  due_date  | priority | completed 
 -- ----+-------------+------------+----------+-----------
---   1 | task #1     | 2017-10-16 |        1 | f
---   2 | task #x     | 2017-09-16 |        1 | t
--- (2 rows)
+--   1 | Task #1     | 2017/10/08 |        1 | f
+-- (1 row)
 
 
--- postgres=# \d
---              List of relations
---  Schema |    Name     |   Type   |  Owner   
--- --------+-------------+----------+----------
---  public | todo        | table    | postgres
---  public | todo_id_seq | sequence | postgres
+-- flexhire=# \d
+--               List of relations
+--  Schema |     Name     |   Type   |  Owner   
+-- --------+--------------+----------+----------
+--  public | todos        | table    | postgres
+--  public | todos_id_seq | sequence | postgres
 -- (2 rows)
