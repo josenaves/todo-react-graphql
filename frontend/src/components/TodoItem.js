@@ -5,7 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 const TodoItem = (props) => {
   return (
     <Checkbox
-      label={props.todo.node.description}
+      label={props.todo.description}
     />
   );
 };

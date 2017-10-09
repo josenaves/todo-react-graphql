@@ -5,18 +5,14 @@ import { loadedTodos } from '../actions/actions';
 
 const TodoQuery = gql`
   {
-      allTodos {
-        edges {
-          node {
-            id
-            description
-            dueDate
-            priority
-            completed
-          }
-        }
-      }
+    todos {
+      id
+      description
+      dueDate
+      completed
+      priority
     }
+  }
 `;
 
 const mapStateToProps = () => ({foo: 'bar'});
