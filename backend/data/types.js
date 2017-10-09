@@ -22,6 +22,13 @@ const typeDefs = `
       completed: Boolean!
     ): Todo
     removeTodo(id: ID!): ID
+    editTodo(
+      id: ID!
+      description: String
+      dueDate: String
+      priority: Int
+      completed: Boolean
+    ): Todo
   }
 
   schema {

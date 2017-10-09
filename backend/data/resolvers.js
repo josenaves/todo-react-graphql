@@ -12,7 +12,7 @@ const resolvers = {
     },
     async todo(root, { id }) {
       const rows = await knex('todos')
-        .where({id: id})
+        .where({id})
         .select(fields);
       return rows[0];
     }
@@ -26,9 +26,16 @@ const resolvers = {
     },
     async removeTodo(root, { id }) {
       const rows = await knex('todos')
-        .where({id})
+        .where({id: id})
         .del();
       return rows[0];
+    },
+    async editTodo(root, {id,  description, dueDate, priority, completed }) {
+      const r = await knex('todos')
+        .where({id})
+        .update({ description, due_date: dueDate, priority, completed })
+        .returning(fields);
+      return r[0];
     }
   }
 };
