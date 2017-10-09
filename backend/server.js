@@ -1,16 +1,16 @@
 const express = require('express');
-const postgraphql = require('postgraphql').postgraphql;
-const expressGraphQL = require('express-graphql');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
+const schema = require('./data/schema');
 
 const app = express().use('*', cors());
 
-// app.use(postgraphql('postgres://localhost:5432'))
-app.use(postgraphql(
-  'postgres://postgres:123456@localhost:5432/flexhire',
-  'public',
-  { graphiql: true }
-))
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }) );
+app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-app.listen(4000)
-console.log("Listening...");
+const GRAPHQL_PORT = 4000;
+
+app.listen(GRAPHQL_PORT)
+
+console.log(`Listening on port ${GRAPHQL_PORT}...`);
