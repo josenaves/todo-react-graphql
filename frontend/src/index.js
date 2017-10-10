@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import {
   ApolloClient,
   ApolloProvider,
@@ -20,7 +22,8 @@ const networkInterface = createNetworkInterface({
 });
 
 const client = new ApolloClient({
-  networkInterface: networkInterface
+  networkInterface: networkInterface,
+  dataIdFromObject: o => o.id
 });
 
 const store = createStore(
@@ -31,8 +34,12 @@ const store = createStore(
   {}, // initial state
   compose(
       applyMiddleware(client.middleware()),
+      applyMiddleware(thunk),
+      applyMiddleware(logger),
       // If you are using the devToolsExtension, you can add it here also
-      (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+      (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') 
+        ? window.__REDUX_DEVTOOLS_EXTENSION__() 
+        : f => f,
   )
 );
 

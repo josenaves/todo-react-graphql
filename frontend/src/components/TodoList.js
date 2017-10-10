@@ -23,9 +23,9 @@ const TodoList = (props) => {
   }
 
   // dispach an action creator
-  props.loadedTodos(data.allTodos.edges);
+  props.loadedTodos(data.todos);
 
-  const todos = data.allTodos.edges;
+  const todos = data.todos;
   return (
     <div>
       { todos.map((todo, index) => 

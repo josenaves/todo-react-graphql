@@ -1,8 +1,6 @@
 import {
   LOADED_TODOS,
   ADD_TODO,
-  EDIT_TODO,
-  DELETE_TODO,
   COMPLETE_TODO
 } from '../actions/types';
 
@@ -12,11 +10,15 @@ const todoReducer = (state = [], action) => {
       return action.todos;
       
     case ADD_TODO:
+      const { description, dueDate, priority, completed, id } = action.todo;
       return [
         ...state,
         {
-          text: action.text,
-          completed: false
+          description,
+          dueDate,
+          priority,
+          completed,
+          id
         }
       ];
 
