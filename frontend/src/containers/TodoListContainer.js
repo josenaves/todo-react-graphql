@@ -1,9 +1,9 @@
-import { gql, withApollo, graphql, compose } from 'react-apollo';
+import { gql, graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import TodoList from '../components/TodoList';
 import { loadedTodos } from '../actions/actions';
 
-const TodoQuery = gql`
+export const TodoListQuery = gql`
   {
     todos {
       id
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 // export default withApollo(connect(mapStateToProps, mapDispatchToProps)(TodoList));
 
 export default compose(
-  graphql(TodoQuery),
+  graphql(TodoListQuery),
   connect(mapStateToProps, mapDispatchToProps)
 )(TodoList);
 

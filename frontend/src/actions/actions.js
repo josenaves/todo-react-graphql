@@ -1,5 +1,6 @@
-import { gql, graphql } from 'react-apollo';
+import { gql } from 'react-apollo';
 import { ADD_TODO, LOADED_TODOS } from './types.js';
+import { TodoListQuery } from '../containers/TodoListContainer';
 
 export const loadedTodos = (todos) => ({
   type: LOADED_TODOS,
@@ -14,7 +15,10 @@ export const addTodo = (todo, client) => async (dispatch) => {
         "desc": todo.description,
         "due": todo.dueDate,
         "priority": todo.priority
-      }
+      },
+      refetchQueries: [
+        { query: TodoListQuery }
+      ]     
     });
 
     console.log(ret);
@@ -32,13 +36,13 @@ export const addTodo = (todo, client) => async (dispatch) => {
 }
 
 const addTaskMutation = gql`
-mutation add($desc: String!, $due: String!, $priority: Int!) {
-  addTodo(description: $desc, dueDate:$due, priority: $priority, completed: false) {
-    id
-    description
-    dueDate
-    priority
-    completed
+  mutation add($desc: String!, $due: String!, $priority: Int!) {
+    addTodo(description: $desc, dueDate:$due, priority: $priority, completed: false) {
+      id
+      description
+      dueDate
+      priority
+      completed
+    }
   }
-}
 `;

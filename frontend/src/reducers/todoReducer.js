@@ -1,8 +1,6 @@
 import {
   LOADED_TODOS,
   ADD_TODO,
-  EDIT_TODO,
-  DELETE_TODO,
   COMPLETE_TODO
 } from '../actions/types';
 

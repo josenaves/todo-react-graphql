@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withApollo } from 'react-apollo';
-import ApolloClient from 'apollo-client';
 import PropTypes from 'prop-types';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -63,13 +62,12 @@ class TodoForm extends Component {
   }
 
   createNewTask = () => {
-    console.log("have all this: ", this.state);
     // call the action creator addTodo
     const { description, priority, dueDate } = this.state;
     const { client } = this.props;
     this.props.addTodo({ description, priority, dueDate }, client);
-
-    this.props.close;
+    this.props.close();
+    this.setState({ description: '', priority: '', dueDate: null });
   }
 
   renderForm() {
@@ -108,6 +106,11 @@ class TodoForm extends Component {
       </div>
     );
   }
+}
+
+TodoForm.propTypes = {
+  show: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired
 }
 
 const mapStateToProps = () => ({foo: 'bar'});

@@ -22,7 +22,8 @@ const networkInterface = createNetworkInterface({
 });
 
 const client = new ApolloClient({
-  networkInterface: networkInterface
+  networkInterface: networkInterface,
+  dataIdFromObject: o => o.id
 });
 
 const store = createStore(
