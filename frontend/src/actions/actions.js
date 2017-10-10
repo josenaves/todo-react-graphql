@@ -20,15 +20,11 @@ export const addTodo = (todo, client) => async (dispatch) => {
         { query: TodoListQuery }
       ]     
     });
-
-    console.log(ret);
-
+    
     dispatch({
       type: ADD_TODO,
       todo: ret.data.addTodo
     });
-    // TODO how to refresh the list (automatically ?) - is it really necessary
-    // dispatch(getPosts())
   }
   catch(err) {
     console.error("Error adding new todo", err)
