@@ -1,17 +1,52 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withApollo } from 'react-apollo';
+import ApolloClient from 'apollo-client';
 import PropTypes from 'prop-types';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
+import { addTodo } from '../actions/actions';
 
 class TodoForm extends Component {
   constructor(props) {
     super(props);
-    console.log("props:", props);
-      
-    this.state = { description: '', priority: '', dueDate: null };
-
+    this.state = {
+      description: '',
+      priority: '',
+      dueDate: null
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  renderDialog() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.props.close}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.createNewTask}
+      />
+    ];
+
+    return (
+      <Dialog
+        title="New task"
+        actions={actions}
+        modal={true}
+        open={this.props.show}
+        onRequestClose={this.props.close}
+      >
+        {this.renderForm()}
+      </Dialog>
+    );
   }
 
   handleInputChange(event) {
@@ -19,15 +54,25 @@ class TodoForm extends Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     this.setState({ [name]: value });
+    console.log(this.state);
   }
 
   handleSubmit(event){
-    console.log("saving: ", this.state.value);
+    console.log("handleSubmit", event);
     event.preventDefault();
-    // save todo
   }
 
-  render() {
+  createNewTask = () => {
+    console.log("have all this: ", this.state);
+    // call the action creator addTodo
+    const { description, priority, dueDate } = this.state;
+    const { client } = this.props;
+    this.props.addTodo({ description, priority, dueDate }, client);
+
+    this.props.close;
+  }
+
+  renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -39,6 +84,7 @@ class TodoForm extends Component {
         />
         <DatePicker
           name="dueDate"
+          autoOk={true}
           value={this.state.dueDate}
           onChange={(e, date) => this.setState({ dueDate: date })}
           hintText="Choose the due date"
@@ -54,6 +100,21 @@ class TodoForm extends Component {
       </form>
     );
   }
+
+  render() {
+    return (
+      <div>
+        {this.renderDialog()}
+      </div>
+    );
+  }
 }
 
-export default TodoForm;
+const mapStateToProps = () => ({foo: 'bar'});
+const mapDispatchToProps = (dispatch) => ({
+  addTodo(todo, client) {
+    dispatch(addTodo(todo, client));
+  }
+});
+
+export default withApollo(connect(mapStateToProps, mapDispatchToProps)(TodoForm));
