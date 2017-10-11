@@ -28,7 +28,6 @@ export default withApollo(
   compose(
     graphql(TodoListQuery),
     connect(null, mapDispatchToProps)
-  )
-(TodoList));
+  )(TodoList));
 
 
