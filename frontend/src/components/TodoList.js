@@ -1,9 +1,15 @@
 import React from 'react';
+import { List}  from 'material-ui/List';
 import TodoItem from './TodoItem';
 
-const TodoList = (props) => {
-  console.log("props:", props);
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+};
 
+const TodoList = (props) => {
   const { data } = props;
 
   if (data.loading) {
@@ -27,10 +33,12 @@ const TodoList = (props) => {
 
   const todos = data.todos;
   return (
-    <div>
+    <div style={styles.root}>
+      <List style={{ width: '90%' }}>
       { todos.map((todo, index) => 
-        <TodoItem todo={todo} key={index}/>
+        <TodoItem todo={todo} key={index} {...props} />
       )}
+      </List>
     </div>
   );
 };
