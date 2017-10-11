@@ -10,8 +10,7 @@ import './App.css';
 const style = {
   paper: {
     margin: 'auto',
-    width: 600,
-    height: 400,
+    width: 500,
     textAlign: 'center',
     display: 'inline-block'
   },

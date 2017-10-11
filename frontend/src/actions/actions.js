@@ -1,5 +1,5 @@
 import { gql } from 'react-apollo';
-import { ADD_TODO, LOADED_TODOS } from './types.js';
+import { ADD_TODO, LOADED_TODOS, DELETE_TODO } from './types.js';
 import { TodoListQuery } from '../containers/TodoListContainer';
 
 export const loadedTodos = (todos) => ({
@@ -31,6 +31,29 @@ export const addTodo = (todo, client) => async (dispatch) => {
   }
 }
 
+export const deleteTodo = (todo, client) => async (dispatch) => {
+  const { id } = todo;
+  try {
+    await client.mutate({
+      mutation : removeTaskMutation,
+      variables: {
+        "id": id,
+      },
+      refetchQueries: [
+        { query: TodoListQuery }
+      ]     
+    });
+    
+    dispatch({
+      type: DELETE_TODO,
+      id: id
+    });
+  }
+  catch(err) {
+    console.error("Error deleting todo", err)
+  }
+};
+
 const addTaskMutation = gql`
   mutation add($desc: String!, $due: String!, $priority: Int!) {
     addTodo(description: $desc, dueDate:$due, priority: $priority, completed: false) {
@@ -40,5 +63,11 @@ const addTaskMutation = gql`
       priority
       completed
     }
+  }
+`;
+
+const removeTaskMutation = gql`
+  mutation delete($id: ID!) {
+    removeTodo(id: $id)
   }
 `;

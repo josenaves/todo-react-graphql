@@ -57,7 +57,6 @@ class TodoForm extends Component {
   }
 
   handleSubmit(event){
-    console.log("handleSubmit", event);
     event.preventDefault();
   }
 
@@ -113,11 +112,10 @@ TodoForm.propTypes = {
   close: PropTypes.func.isRequired
 }
 
-const mapStateToProps = () => ({foo: 'bar'});
 const mapDispatchToProps = (dispatch) => ({
   addTodo(todo, client) {
     dispatch(addTodo(todo, client));
   }
 });
 
-export default withApollo(connect(mapStateToProps, mapDispatchToProps)(TodoForm));
+export default withApollo(connect(null, mapDispatchToProps)(TodoForm));

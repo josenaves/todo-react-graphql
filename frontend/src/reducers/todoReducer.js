@@ -1,6 +1,7 @@
 import {
   LOADED_TODOS,
   ADD_TODO,
+  DELETE_TODO,
   COMPLETE_TODO
 } from '../actions/types';
 
@@ -21,6 +22,9 @@ const todoReducer = (state = [], action) => {
           id
         }
       ];
+
+    case DELETE_TODO:
+      return state.filter( t => t.id !== action.id );
 
     case COMPLETE_TODO:
       return state.map((todo, index) => {
